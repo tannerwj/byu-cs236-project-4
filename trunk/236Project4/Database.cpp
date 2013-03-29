@@ -18,10 +18,10 @@ Database::Database(std::vector<Scheme> s, std::vector<Fact> f, std::vector<Rule>
 		database[factIter->getName()].addTuple(*factIter);
 	}
 
-	//std::vector<Rule>::iterator ruleIter;
-	//for ( factIter = r.begin(); ruleIter < r.end(); ruleIter++) {
-	//	;
-	//}
+	std::vector<Rule>::iterator ruleIter;
+	for ( ruleIter = r.begin(); ruleIter < r.end(); ruleIter++) {
+		;
+	}
 
 	std::vector<Query>::iterator queryIter;
 	for ( queryIter = q.begin(); queryIter < q.end(); queryIter++) {
