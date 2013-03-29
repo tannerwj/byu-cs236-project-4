@@ -19,9 +19,13 @@ public:
 	std::string getPredicateListTail(std::stack<Token*>*);
 	std::string getName();
 	std::vector<Token> getAttributes();
+	std::vector<std::string> getPredicateNames();
+	std::vector<std::vector<Token>> getPredicateAttributes();
 	std::string toString();
 private:
 	std::string PredicateString;
+	std::vector<std::string> predicateNames;
+	std::vector<std::vector<Token>> predicateAttributes;
 	std::string name;
 	Parameter p;
 	void failure(Token*);

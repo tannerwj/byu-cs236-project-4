@@ -16,11 +16,11 @@ Predicate::Predicate(std::stack<Token*>* tokens, bool){
 }
 
 
-
 // <Predicate>   ->  <Identifier> ( <Parameter List> )
 std::string Predicate::getPredicate(std::stack<Token*>* tokens){
 
 	name = getIdentifier(tokens);
+	predicateNames.push_back(name);
 
 	std::string s = name + "(";
 
@@ -32,6 +32,9 @@ std::string Predicate::getPredicate(std::stack<Token*>* tokens){
 	tokens->pop();
 	
 	p = Parameter(tokens);
+
+
+	predicateAttributes.push_back(p.getAttributes());
 
 	s += p.toString();
 	currentToken = tokens->top();
@@ -91,6 +94,13 @@ std::string Predicate::getName(){
 
 std::vector<Token> Predicate::getAttributes(){
 	return p.getAttributes();
+}
+
+std::vector<std::string> Predicate::getPredicateNames(){
+	return predicateNames;
+}
+std::vector<std::vector<Token>> Predicate::getPredicateAttributes(){
+	return predicateAttributes;
 }
 
 std::string Predicate::toString(){
