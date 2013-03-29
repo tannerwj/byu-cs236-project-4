@@ -69,8 +69,27 @@ void Database::ProcessQuery(Query q){
 		std::cout << r.toString();
 }
 
-void Database::ProcessRule(Rule){
-	std::cout << "This is so cool!\n";
+void Database::ProcessRule(Rule r){
+	std::cout << r.getHead().getName() << "(";
+	for(unsigned int i = 0; i < r.getHead().getAttributes().size(); i++){
+		std::cout << r.getHead().getAttributes().at(i).getTokensValue();
+		if(i < r.getHead().getAttributes().size() - 1)
+			std::cout << ",";
+	}
+	std::cout << ") :- ";
+
+	for(unsigned int i = 0; i < r.getPredicateNames().size(); i++){
+		std::cout << r.getPredicateNames().at(i) << "(";
+			for(unsigned int j = 0; j < r.getPredicatesAttributes().at(i).size(); j++){
+				std::cout << r.getPredicatesAttributes().at(i).at(j).getTokensValue();
+				if(j < r.getPredicatesAttributes().at(i).size() - 1)
+					std::cout << ",";
+			}
+			std::cout << ")";
+		if(i < r.getHead().getAttributes().size() - 1)
+			std::cout << ",";
+	}
+	std::cout << "\n";
 }
 
 
