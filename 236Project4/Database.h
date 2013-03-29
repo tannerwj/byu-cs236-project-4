@@ -14,6 +14,7 @@ public:
 	~Database(void);
 	Database(std::vector<Scheme>, std::vector<Fact>, std::vector<Rule> , std::vector<Query>);
 	void ProcessQuery(Query);
+	void ProcessRule(Rule);
 	std::string toString();
 private:
 	std::map<std::string, Relation> database;
