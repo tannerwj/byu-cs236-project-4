@@ -20,13 +20,15 @@ public:
 	std::string getIdentifierListTail(std::stack<Token*>*);
 	std::string getPredicateList(std::stack<Token*>*);
 	Predicate getHead();
-	std::vector<Predicate> getPredicates();
+	std::vector<std::string> getPredicateNames();
+	std::vector<std::vector<Token>> getPredicatesAttributes();
 	std::string toString();
 private:
 	std::string RuleString;
 	Predicate headPredicate;
-	std::vector<Predicate> predicateList;
+	Predicate predicateList;
 	void failure(Token*);
 
 };
+
 

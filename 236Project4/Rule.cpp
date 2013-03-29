@@ -24,11 +24,11 @@ std::string Rule::getRule(std::stack<Token*>* tokens){
 
 	currentToken = tokens->top();
 
-	Predicate p = Predicate(tokens);
+	predicateList = Predicate(tokens);
 
 	currentToken = tokens->top();
 
-	s += p.toString();	
+	s += predicateList.toString();	
 
 	if(currentToken->getTokenType() != PERIOD){
 		failure(currentToken);
@@ -84,8 +84,12 @@ Predicate Rule::getHead(){
 	return headPredicate;
 }
 
-std::vector<Predicate> Rule::getPredicates(){
-	return predicateList;
+std::vector<std::string> Rule::getPredicateNames(){
+	return predicateList.getPredicateNames();
+}
+
+std::vector<std::vector<Token>> Rule::getPredicatesAttributes(){
+	return predicateList.getPredicateAttributes();
 }
 
 std::string Rule::toString(){
