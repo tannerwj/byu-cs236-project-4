@@ -20,7 +20,7 @@ Database::Database(std::vector<Scheme> s, std::vector<Fact> f, std::vector<Rule>
 
 	std::vector<Rule>::iterator ruleIter;
 	for ( ruleIter = r.begin(); ruleIter < r.end(); ruleIter++) {
-		;
+		ProcessRule(*ruleIter);
 	}
 
 	std::vector<Query>::iterator queryIter;
@@ -67,6 +67,10 @@ void Database::ProcessQuery(Query q){
 
 	if(ProjectTokens.size() != 0)
 		std::cout << r.toString();
+}
+
+void Database::ProcessRule(Rule){
+	std::cout << "This is so cool!\n";
 }
 
 
