@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DatalogProgram.cpp" />
+    <ClCompile Include="Domain.cpp" />
+    <ClCompile Include="Fact.cpp" />
+    <ClCompile Include="FactList.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Lex.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Parameter.cpp" />
+    <ClCompile Include="Predicate.cpp" />
+    <ClCompile Include="Query.cpp" />
+    <ClCompile Include="QueryList.cpp" />
+    <ClCompile Include="Relation.cpp" />
+    <ClCompile Include="Rule.cpp" />
+    <ClCompile Include="RuleList.cpp" />
+    <ClCompile Include="Schema.cpp" />
+    <ClCompile Include="Scheme.cpp" />
+    <ClCompile Include="SchemeList.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokenType.cpp" />
+    <ClCompile Include="Tuple.cpp" />
+    <ClCompile Include="TupleSet.cpp" />
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Database.h" />
+    <ClInclude Include="DatalogProgram.h" />
+    <ClInclude Include="Domain.h" />
+    <ClInclude Include="Fact.h" />
+    <ClInclude Include="FactList.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Lex.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Parameter.h" />
+    <ClInclude Include="Predicate.h" />
+    <ClInclude Include="Query.h" />
+    <ClInclude Include="QueryList.h" />
+    <ClInclude Include="Relation.h" />
+    <ClInclude Include="Rule.h" />
+    <ClInclude Include="RuleList.h" />
+    <ClInclude Include="Schema.h" />
+    <ClInclude Include="Scheme.h" />
+    <ClInclude Include="SchemeList.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="TokenType.h" />
+    <ClInclude Include="Tuple.h" />
+    <ClInclude Include="TupleSet.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{73828AC9-DE06-428A-99FD-7CEFCDE344E4}</ProjectGuid>
+    <RootNamespace>My236Project4</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
