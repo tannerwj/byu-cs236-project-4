@@ -21,7 +21,7 @@ public:
 	Relation Project(Schema);
 	Relation Select(Tuple);
 	Relation Join(Relation);
-	Relation Union(Relation);
+	void Union(Relation);
 	std::vector<Token> getSchema();
 	TupleSet getTupleSet();
 

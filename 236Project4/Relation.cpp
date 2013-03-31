@@ -108,11 +108,18 @@ Relation Relation::Select(Tuple xTuple){
 	return temp;
 }
 
-Relation Relation::Join(Relation){
+Relation Relation::Join(Relation r){
 	return Relation();
 }
-Relation Relation::Union(Relation){
-	return Relation();
+void Relation::Union(Relation r){
+
+	std::vector<Tuple> tuples = r.getTupleSet().getTuples();
+	std::vector<Tuple>::iterator it;
+
+	for(it = tuples.begin(); it < tuples.end(); it++){
+		addTuple(it->getValues());
+	}
+
 }
 
 std::vector<Token> Relation::getSchema(){

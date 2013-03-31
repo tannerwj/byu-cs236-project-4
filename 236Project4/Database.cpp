@@ -70,26 +70,47 @@ void Database::ProcessQuery(Query q){
 }
 
 void Database::ProcessRule(Rule r){
-	std::cout << r.getHead().getName() << "(";
-	for(unsigned int i = 0; i < r.getHead().getAttributes().size(); i++){
-		std::cout << r.getHead().getAttributes().at(i).getTokensValue();
-		if(i < r.getHead().getAttributes().size() - 1)
-			std::cout << ",";
-	}
-	std::cout << ") :- ";
-
 	for(unsigned int i = 0; i < r.getPredicateNames().size(); i++){
-		std::cout << r.getPredicateNames().at(i) << "(";
-			for(unsigned int j = 0; j < r.getPredicatesAttributes().at(i).size(); j++){
-				std::cout << r.getPredicatesAttributes().at(i).at(j).getTokensValue();
-				if(j < r.getPredicatesAttributes().at(i).size() - 1)
-					std::cout << ",";
-			}
-			std::cout << ")";
-		if(i < r.getHead().getAttributes().size() - 1)
-			std::cout << ",";
+			Relation temp = ProcessPredicate(r.getPredicateNames().at(i), r.getPredicatesAttributes().at(i));
+			
+			//Project on the Head predicate Schema
+			temp = temp.Project(Schema(r.getHead().getAttributes()));
+
+			//Make the relation Union compatable
+
+			//Union the Relation
+			database[r.getHead().getName()].Union(temp);
 	}
-	std::cout << "\n";
+}
+
+Relation Database::ProcessPredicate(std::string name, std::vector<Token> attributes){
+	std::vector<Token> ProjectTokens;
+	std::vector<Tuple> SelectTuples;
+	//std::vector<Token> queryTokens = q.getAttributes();
+	Relation r = Relation(database[name].Rename(attributes));
+	
+
+	std::vector<Token>::iterator it;
+	int counter = 0;
+	for(it = attributes.begin(); it < attributes.end(); it++){
+		if(it->getTokenType() == STRING){
+			SelectTuples.push_back(Tuple(r.getSchema(), attributes));
+		} else {
+			ProjectTokens.push_back(*it);
+			//r = r.rename(schema.get(i), qValues.get(i));
+		}
+		counter++;
+	}
+
+	for(int i = 0; i < SelectTuples.size(); i++)
+		r = r.Select(SelectTuples[i]);
+	
+
+	if(ProjectTokens.size() != 0)
+		r = r.Project(ProjectTokens);
+
+	return r;
+
 }
 
 
