@@ -17,8 +17,10 @@ void TupleSet::addTuple(std::vector<Token> n, Fact f){
 	tuples.insert(Tuple(n, f.getAttributes()));
 }
 
-void TupleSet::addTuple(std::vector<Token> n, std::vector<Token> f){
-	tuples.insert(Tuple(n, f));
+bool TupleSet::addTuple(std::vector<Token> n, std::vector<Token> f){
+	std::pair<std::set<Tuple>::iterator, bool> temp;
+	temp = tuples.insert(Tuple(n, f));
+	return temp.second;
 }
 
 std::vector<Tuple> TupleSet::getTuples(){

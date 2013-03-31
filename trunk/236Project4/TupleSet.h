@@ -12,7 +12,7 @@ public:
 	~TupleSet(void);
 	TupleSet(const TupleSet&);
 	void addTuple(std::vector<Token>, Fact);
-	void addTuple(std::vector<Token>, std::vector<Token>);
+	bool addTuple(std::vector<Token>, std::vector<Token>);
 	std::vector<Tuple> getTuples();
 	std::string toString();
 private:
