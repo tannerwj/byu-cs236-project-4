@@ -15,6 +15,7 @@ public:
 	Database(std::vector<Scheme>, std::vector<Fact>, std::vector<Rule> , std::vector<Query>);
 	void ProcessQuery(Query);
 	void ProcessRule(Rule);
+	Relation ProcessPredicate(std::string, std::vector<Token>);
 	std::string toString();
 private:
 	std::map<std::string, Relation> database;
