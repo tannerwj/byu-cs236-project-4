@@ -14,7 +14,7 @@ public:
 	~Database(void);
 	Database(std::vector<Scheme>, std::vector<Fact>, std::vector<Rule> , std::vector<Query>);
 	void ProcessQuery(Query);
-	void ProcessRule(Rule);
+	bool ProcessRule(Rule);
 	Relation ProcessPredicate(std::string, std::vector<Token>);
 	std::string toString();
 private:

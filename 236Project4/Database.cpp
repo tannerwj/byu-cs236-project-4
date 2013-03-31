@@ -18,10 +18,22 @@ Database::Database(std::vector<Scheme> s, std::vector<Fact> f, std::vector<Rule>
 		database[factIter->getName()].addTuple(*factIter);
 	}
 
+	
 	std::vector<Rule>::iterator ruleIter;
-	for ( ruleIter = r.begin(); ruleIter < r.end(); ruleIter++) {
-		ProcessRule(*ruleIter);
-	}
+	bool addedSomething;
+	int counter = 0;
+
+	do {
+		counter++;
+		addedSomething = false;
+
+		for ( ruleIter = r.begin(); ruleIter < r.end(); ruleIter++) {
+			if(ProcessRule(*ruleIter))
+				addedSomething = true;
+		}
+	} while (addedSomething);
+
+	std::cout << "Schemes populated after " << counter << " passes through the Rules.\n";
 
 	std::vector<Query>::iterator queryIter;
 	for ( queryIter = q.begin(); queryIter < q.end(); queryIter++) {
@@ -69,18 +81,19 @@ void Database::ProcessQuery(Query q){
 		std::cout << r.toString();
 }
 
-void Database::ProcessRule(Rule r){
-	for(unsigned int i = 0; i < r.getPredicateNames().size(); i++){
+bool Database::ProcessRule(Rule r){
+	
+	Relation joinedPredicates = ProcessPredicate(r.getPredicateNames().at(0), r.getPredicatesAttributes().at(0));
+
+	for(unsigned int i = 1; i < r.getPredicateNames().size(); i++){
 			Relation temp = ProcessPredicate(r.getPredicateNames().at(i), r.getPredicatesAttributes().at(i));
-			
-			//Project on the Head predicate Schema
-			temp = temp.Project(Schema(r.getHead().getAttributes()));
-
-			//Make the relation Union compatable
-
-			//Union the Relation
-			database[r.getHead().getName()].Union(temp);
+			joinedPredicates = joinedPredicates.Join(temp);
 	}
+
+	joinedPredicates = joinedPredicates.Project(Schema(r.getHead().getAttributes()));
+
+	return database[r.getHead().getName()].Union(joinedPredicates);
+
 }
 
 Relation Database::ProcessPredicate(std::string name, std::vector<Token> attributes){

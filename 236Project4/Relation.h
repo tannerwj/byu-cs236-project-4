@@ -15,13 +15,13 @@ public:
 	Relation(const Relation&);
 	std::string toString();
 	void addTuple(Fact);
-	void addTuple(std::vector<Token>);
+	bool addTuple(std::vector<Token>);
 	Relation Rename(Schema);
 	Relation Rename(Token);
 	Relation Project(Schema);
 	Relation Select(Tuple);
 	Relation Join(Relation);
-	void Union(Relation);
+	bool Union(Relation);
 	std::vector<Token> getSchema();
 	TupleSet getTupleSet();
 

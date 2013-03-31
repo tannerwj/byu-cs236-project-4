@@ -20,8 +20,8 @@ void Relation::addTuple(Fact f){
 	t.addTuple(s.getSchemas(), f);
 }
 
-void Relation::addTuple(std::vector<Token> v){
-	t.addTuple(s.getSchemas(), v);
+bool Relation::addTuple(std::vector<Token> v){
+	return t.addTuple(s.getSchemas(), v);
 }
 
 Relation Relation::Rename(Schema q){
@@ -109,16 +109,59 @@ Relation Relation::Select(Tuple xTuple){
 }
 
 Relation Relation::Join(Relation r){
-	return Relation();
+
+	std::vector<Token> newSchema;
+	std::vector<Tuple> tuplesA = t.getTuples();
+	std::vector<Tuple> tuplesB = r.getTupleSet().getTuples();
+	std::vector<Tuple>::iterator itA;
+	std::vector<Tuple>::iterator itB;
+	Relation temp;
+
+	for (unsigned int i = 0; i < s.getSchemas().size(); i++)
+		newSchema.push_back(s.getSchemas().at(i));
+
+	for (unsigned int i = 0; i < r.getSchema().size(); i++)
+		newSchema.push_back(r.getSchema().at(i));
+
+	temp = Relation(name, newSchema);
+
+	for(itA = tuplesA.begin(); itA < tuplesA.end(); itA++){
+
+		std::vector<Token> aValues;
+
+		for (unsigned int i = 0; i < itA->getValues().size(); i++)
+			aValues.push_back(itA->getValues().at(i));
+
+		for(itB = tuplesB.begin(); itB < tuplesB.end(); itB++){
+
+			std::vector<Token> bValues;
+
+			for (unsigned int i = 0; i < aValues.size(); i++)
+				bValues.push_back(aValues.at(i));
+
+			for (unsigned int i = 0; i < itB->getValues().size(); i++)
+				bValues.push_back(itB->getValues().at(i));
+
+			temp.addTuple(bValues);
+
+		}
+	}
+
+	return temp;
 }
-void Relation::Union(Relation r){
+bool Relation::Union(Relation r){
+
+	bool addedSomething = false;
 
 	std::vector<Tuple> tuples = r.getTupleSet().getTuples();
 	std::vector<Tuple>::iterator it;
 
 	for(it = tuples.begin(); it < tuples.end(); it++){
-		addTuple(it->getValues());
+		if(addTuple(it->getValues()))
+			addedSomething = true;
 	}
+
+	return addedSomething;
 
 }
 
