@@ -111,17 +111,24 @@ Relation Relation::Select(Tuple xTuple){
 Relation Relation::Join(Relation r){
 
 	std::vector<Token> newSchema;
+	Schema	projectSchema;
 	std::vector<Tuple> tuplesA = t.getTuples();
 	std::vector<Tuple> tuplesB = r.getTupleSet().getTuples();
 	std::vector<Tuple>::iterator itA;
 	std::vector<Tuple>::iterator itB;
 	Relation temp;
 
-	for (unsigned int i = 0; i < s.getSchemas().size(); i++)
+	for (unsigned int i = 0; i < s.getSchemas().size(); i++){
 		newSchema.push_back(s.getSchemas().at(i));
+		if(!projectSchema.contains(s.getSchemas().at(i)))
+			projectSchema.add(s.getSchemas().at(i));
+	}
 
-	for (unsigned int i = 0; i < r.getSchema().size(); i++)
+	for (unsigned int i = 0; i < r.getSchema().size(); i++){
 		newSchema.push_back(r.getSchema().at(i));
+		if(!projectSchema.contains(r.getSchema().at(i)))
+			projectSchema.add(r.getSchema().at(i));
+	}
 
 	temp = Relation(name, newSchema);
 
@@ -146,6 +153,8 @@ Relation Relation::Join(Relation r){
 
 		}
 	}
+
+	temp = temp.Project(projectSchema);
 
 	return temp;
 }
