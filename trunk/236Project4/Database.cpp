@@ -49,7 +49,7 @@ void Database::ProcessQuery(Query q){
 	
 
 	std::vector<Token>::iterator it;
-	int counter = 0;
+	//int counter = 0;
 	for(it = queryTokens.begin(); it < queryTokens.end(); it++){
 
 		if(it->getTokenType() == STRING)
@@ -57,7 +57,7 @@ void Database::ProcessQuery(Query q){
 		else 
 			ProjectTokens.push_back(*it);
 
-		counter++;
+		//counter++;
 	}
 
 	for(int i = 0; i < SelectTuples.size(); i++)
@@ -99,7 +99,7 @@ Relation Database::ProcessPredicate(std::string name, std::vector<Token> attribu
 	Relation r = Relation(database[name].Rename(attributes));
 	std::vector<Token>::iterator it;
 
-	int counter = 0;
+	//int counter = 0;
 	for(it = attributes.begin(); it < attributes.end(); it++){
 
 		if(it->getTokenType() == STRING)
@@ -107,7 +107,7 @@ Relation Database::ProcessPredicate(std::string name, std::vector<Token> attribu
 		else
 			ProjectTokens.push_back(*it);
 
-		counter++;
+		//counter++;
 	}
 
 	for(int i = 0; i < SelectTuples.size(); i++)
