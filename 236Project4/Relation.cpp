@@ -108,11 +108,11 @@ Relation Relation::Select(Tuple xTuple){
 	return temp;
 }
 
-Relation Relation::Join(Relation r){
-
-	std::vector<Token> newSchema;
-	Schema	projectSchema;
-	std::vector<Tuple> tuplesA = t.getTuples();
+Relation Relation::Join(Relation r){							// Join makes the full cross product of the two relations
+																// and then projects on the schema made by the natual join
+	std::vector<Token> newSchema;								// The project funciton will select the proper tuples if
+	Schema	projectSchema;										// the two joined relations have an attribute in common, givin
+	std::vector<Tuple> tuplesA = t.getTuples();					// us a proper natural join.
 	std::vector<Tuple> tuplesB = r.getTupleSet().getTuples();
 	std::vector<Tuple>::iterator itA;
 	std::vector<Tuple>::iterator itB;
@@ -121,7 +121,7 @@ Relation Relation::Join(Relation r){
 	for (unsigned int i = 0; i < s.getSchemas().size(); i++){
 		newSchema.push_back(s.getSchemas().at(i));
 		if(!projectSchema.contains(s.getSchemas().at(i)))
-			projectSchema.add(s.getSchemas().at(i));
+			projectSchema.add(s.getSchemas().at(i));			// Populate the schema defined by natual join.
 	}
 
 	for (unsigned int i = 0; i < r.getSchema().size(); i++){
@@ -130,7 +130,7 @@ Relation Relation::Join(Relation r){
 			projectSchema.add(r.getSchema().at(i));
 	}
 
-	temp = Relation(name, newSchema);
+	temp = Relation(name, newSchema);							// Creats a relation with the schema of the full cross product
 
 	for(itA = tuplesA.begin(); itA < tuplesA.end(); itA++){
 
@@ -140,7 +140,6 @@ Relation Relation::Join(Relation r){
 			aValues.push_back(itA->getValues().at(i));
 
 		for(itB = tuplesB.begin(); itB < tuplesB.end(); itB++){
-
 			std::vector<Token> bValues;
 
 			for (unsigned int i = 0; i < aValues.size(); i++)
@@ -150,8 +149,8 @@ Relation Relation::Join(Relation r){
 				bValues.push_back(itB->getValues().at(i));
 
 			temp.addTuple(bValues);
-
 		}
+
 	}
 
 	temp = temp.Project(projectSchema);

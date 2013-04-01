@@ -9,22 +9,21 @@ Database::~Database(void){}
 Database::Database(std::vector<Scheme> s, std::vector<Fact> f, std::vector<Rule> r, std::vector<Query> q){
 
 	std::vector<Scheme>::iterator it;
-    for ( it = s.begin() ; it < s.end(); it++ ) {
-		database[it->getName()] = Relation(it->getName(), it->getAttributes());
-    }
-
 	std::vector<Fact>::iterator factIter;
-	for ( factIter = f.begin(); factIter < f.end(); factIter++) {
-		database[factIter->getName()].addTuple(*factIter);
-	}
+	std::vector<Rule>::iterator ruleIter;
+	std::vector<Query>::iterator queryIter;
+	bool addedSomething;
+	int ruleCounter = 0;		// Counts how many passes through the rules it takes to populate the databases
 
 	
-	std::vector<Rule>::iterator ruleIter;
-	bool addedSomething;
-	int counter = 0;
+    for ( it = s.begin() ; it < s.end(); it++ )
+		database[it->getName()] = Relation(it->getName(), it->getAttributes());
+    
+	for ( factIter = f.begin(); factIter < f.end(); factIter++)
+		database[factIter->getName()].addTuple(*factIter);
 
 	do {
-		counter++;
+		ruleCounter++;
 		addedSomething = false;
 
 		for ( ruleIter = r.begin(); ruleIter < r.end(); ruleIter++) {
@@ -33,13 +32,11 @@ Database::Database(std::vector<Scheme> s, std::vector<Fact> f, std::vector<Rule>
 		}
 	} while (addedSomething);
 
-	std::cout << "Schemes populated after " << counter << " passes through the Rules.\n";
+	std::cout << "Schemes populated after " << ruleCounter << " passes through the Rules.\n";
 
-	std::vector<Query>::iterator queryIter;
-	for ( queryIter = q.begin(); queryIter < q.end(); queryIter++) {
-		ProcessQuery(*queryIter);
-	}
 	
+	for ( queryIter = q.begin(); queryIter < q.end(); queryIter++)
+		ProcessQuery(*queryIter);
 
 }
 
@@ -54,12 +51,12 @@ void Database::ProcessQuery(Query q){
 	std::vector<Token>::iterator it;
 	int counter = 0;
 	for(it = queryTokens.begin(); it < queryTokens.end(); it++){
-		if(it->getTokenType() == STRING){
+
+		if(it->getTokenType() == STRING)
 			SelectTuples.push_back(Tuple(r.getSchema(), q.getAttributes()));
-		} else {
+		else 
 			ProjectTokens.push_back(*it);
-			//r = r.rename(schema.get(i), qValues.get(i));
-		}
+
 		counter++;
 	}
 
@@ -92,33 +89,30 @@ bool Database::ProcessRule(Rule r){
 
 	joinedPredicates = joinedPredicates.Project(Schema(r.getHead().getAttributes()));
 
-	return database[r.getHead().getName()].Union(joinedPredicates);
+	return database[r.getHead().getName()].Union(joinedPredicates);						// returns true if something was added to the database
 
 }
 
 Relation Database::ProcessPredicate(std::string name, std::vector<Token> attributes){
 	std::vector<Token> ProjectTokens;
 	std::vector<Tuple> SelectTuples;
-	//std::vector<Token> queryTokens = q.getAttributes();
 	Relation r = Relation(database[name].Rename(attributes));
-	
-
 	std::vector<Token>::iterator it;
+
 	int counter = 0;
 	for(it = attributes.begin(); it < attributes.end(); it++){
-		if(it->getTokenType() == STRING){
+
+		if(it->getTokenType() == STRING)
 			SelectTuples.push_back(Tuple(r.getSchema(), attributes));
-		} else {
+		else
 			ProjectTokens.push_back(*it);
-			//r = r.rename(schema.get(i), qValues.get(i));
-		}
+
 		counter++;
 	}
 
 	for(int i = 0; i < SelectTuples.size(); i++)
 		r = r.Select(SelectTuples[i]);
 	
-
 	if(ProjectTokens.size() != 0)
 		r = r.Project(ProjectTokens);
 
